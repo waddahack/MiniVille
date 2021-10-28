@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\C#\\MiniVille\\MiniVille\\MiniVille\\MiniVille.csproj",
+      "projectUniqueName": "D:\\C#\\MiniVille\\MiniVille\\MiniVille.csproj",
       "projectName": "MiniVille",
-      "projectPath": "D:\\C#\\MiniVille\\MiniVille\\MiniVille\\MiniVille.csproj",
+      "projectPath": "D:\\C#\\MiniVille\\MiniVille\\MiniVille.csproj",
       "packagesPath": "C:\\Users\\MarinRuelen\\.nuget\\packages\\",
-      "outputPath": "D:\\C#\\MiniVille\\MiniVille\\MiniVille\\obj\\",
+      "outputPath": "D:\\C#\\MiniVille\\MiniVille\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\MarinRuelen\\AppData\\Roaming\\NuGet\\NuGet.Config",

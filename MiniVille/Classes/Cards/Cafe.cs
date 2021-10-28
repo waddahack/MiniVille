@@ -6,12 +6,19 @@ namespace MiniVille.Classes.Cards
 {
     class Cafe : Card
     {
-        public Cafe() : base(CardColor.Rouge, new int[]{3}, 2){}
+        public Cafe() : base()
+        {
+            Name = "Café";
+            Color = CardColor.Rouge;
+            _activationNumbers = new int[] { 3 };
+            Price = 2;
+            Effet = "Recevez 1 pièce du joueur qui a lancé le dé";
+        }
 
         public override void ApplyEffect()
         {
-            this.owner.GainCoins(1);
-            Game.CurrentPlayer.LoseCoins(1);
+            this.Owner.GainCoins(1);
+            Game.Players[Game.CurrentPlayerId].LoseCoins(1);
         }
     }
 }

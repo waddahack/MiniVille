@@ -6,11 +6,18 @@ namespace MiniVille.Classes.Cards
 {
     class Boulangerie : Card
     {
-        public Boulangerie() : base(CardColor.Vert, new int[] { 2 }, 1){}
+        public Boulangerie() : base()
+        {
+            Name = "Boulangerie";
+            Color = CardColor.Vert;
+            _activationNumbers = new int[] { 2 };
+            Price = 1;
+            Effet = "Recevez 2 pièces";
+        }
 
         public override void ApplyEffect()
         {
-            this.owner.GainCoins(2);
+            this.Owner.GainCoins(2);
         }
     }
 }

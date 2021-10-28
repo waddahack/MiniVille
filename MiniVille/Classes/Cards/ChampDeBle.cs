@@ -6,11 +6,18 @@ namespace MiniVille.Classes.Cards
 {
     class ChampDeBle : Card
     {
-        public ChampDeBle() : base(CardColor.Bleu, new int[] { 1 }, 1){}
+        public ChampDeBle() : base()
+        {
+            Name = "Champ de blé";
+            Color = CardColor.Bleu;
+            _activationNumbers = new int[] { 1 };
+            Price = 1;
+            Effet = "Recevez 1 pièce";
+        }
 
         public override void ApplyEffect()
         {
-            this.owner.GainCoins(1);
+            this.Owner.GainCoins(1);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace MiniVille
         static void Main(string[] args)
         {
             Console.SetWindowPosition(0, 0);
-            new Game(2, 2, 10, 3);
+            new Game(2, 1, 10, 3);
         }
     }
 }

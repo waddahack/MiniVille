@@ -6,11 +6,17 @@ namespace MiniVille.Classes.Cards
 {
     class Stade : Card
     {
-        public Stade() : base(CardColor.Bleu, new int[] { 6 }, 6){}
+        public Stade() : base(){
+            Name = "Stade";
+            Color = CardColor.Bleu;
+            _activationNumbers = new int[] { 6 };
+            Price = 6;
+            Effet = "Recevez 4 pièce";
+        }
 
         public override void ApplyEffect()
         {
-            this.owner.GainCoins(4);
+            this.Owner.GainCoins(4);
         }
     }
 }

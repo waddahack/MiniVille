@@ -8,43 +8,47 @@ namespace MiniVille.Classes
     {
         public bool IsAlive { get; set; }
         public string Name { get; set; }
-        private int nbPiece;
+        public int NbPiece { get; set; }
         public List<Card> Hand { get; set; }
 
         public Player(string name, int nbPiece, List<Card> hand)
         {
             Name = name;
             IsAlive = true;
-            this.nbPiece = nbPiece;
+            this.NbPiece = nbPiece;
             this.Hand = hand;
         }
         
-        public void Buy(Pile pile){
+        public void AddToHand(Card card)
+        {
+            NbPiece -= card.Price;
+            card.Owner = this;
+            Hand.Add(card);
+        }
+
+        public bool Buy(Pile pile){
             Card card = pile.Draw();
-            if (card.Price <= nbPiece)
-                nbPiece -= card.Price;
+            if (card.Price <= NbPiece)
+            {
+                AddToHand(card);
+                return true;
+            }
             else
+            {
                 pile.PutBack(card);
+                return false;
+            }
         }
 
         public void GainCoins (int amount){ // MyPlayer.GainCoins(2);
-            nbPiece += amount;
+            NbPiece += amount;
         }
 
         public void LoseCoins (int amount){
-            if(nbPiece > 0)
-                nbPiece -= amount;
+            if(NbPiece > 0)
+                NbPiece -= amount;
             else
                 IsAlive = false;
-        }
-
-        public bool HasRedCard()
-        {
-            bool b = false;
-            foreach (Card c in Hand)
-                if (c.Color == Card.CardColor.Rouge)
-                    b = true;
-            return b;
         }
     }
 }
