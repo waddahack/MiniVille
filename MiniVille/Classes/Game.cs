@@ -69,6 +69,7 @@ namespace MiniVille.Classes
 
                 PlayerRound();
             }
+            Console.WriteLine($"{Players[0]} a gagné la partie");
         }
 
         private void PlayerRound(){
@@ -107,7 +108,8 @@ namespace MiniVille.Classes
                 Console.WriteLine($"{choiceNb} - Acheter {cardName} ({piles[cardName].Cards[0].Price}$)");
                 ++choiceNb;
             }
-            Console.WriteLine("Entrée - Rien acheter");
+            Console.WriteLine("Rien - Rien acheter");
+            Console.WriteLine("Entée - Valider le choix");
             bool bought;
             do
             {
@@ -140,6 +142,7 @@ namespace MiniVille.Classes
                         bought = p.Buy(piles[CardName.Stade]);
                         break;
                     case "":
+                        Console.WriteLine($"{p.Name} n'a rien acheté");
                         bought = true;
                         break;
                     default:
@@ -151,8 +154,19 @@ namespace MiniVille.Classes
             ++CurrentPlayerId;
             if (CurrentPlayerId > Players.Count - 1)
                 CurrentPlayerId = 0;
-            Console.WriteLine("Entrée - joueur suivant");
+            if (!p.IsAlive) Players.Remove(p);
+            //on tue tous les autre joueur car p est le gagnant
+            /*if (p.NbPiece >= 20)
+            {
+                foreach (Player player in Players)
+                {
+                    Players.Remove(player);
+                }
+                Players.Add(p);
+            }*/
+            Console.WriteLine("Entrée - Fin du tour");
             Console.ReadLine();
+            Console.Clear();
         }
 
         private void DisplayPlayers()

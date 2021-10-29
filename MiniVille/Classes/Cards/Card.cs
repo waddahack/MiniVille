@@ -20,7 +20,10 @@ public abstract class Card{
         CardHeight = 15; // 6 mini
     }
 
-    public virtual void ApplyEffect(){}
+    public virtual void ApplyEffect()
+    {
+        Console.WriteLine($"{Owner.Name}, {Effet}");
+    }
 
     public void Render(int x, int y)
     {
