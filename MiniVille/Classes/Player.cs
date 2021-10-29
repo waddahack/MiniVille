@@ -21,7 +21,6 @@ namespace MiniVille.Classes
         
         public void AddToHand(Card card)
         {
-            NbPiece -= card.Price;
             card.Owner = this;
             Hand.Add(card);
         }
@@ -31,6 +30,7 @@ namespace MiniVille.Classes
             if (card.Price <= NbPiece)
             {
                 Console.WriteLine($"{Name} à acheté {card.Name}");
+                NbPiece -= card.Price;
                 AddToHand(card);
                 return true;
             }
