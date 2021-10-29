@@ -62,23 +62,30 @@ namespace MiniVille.Classes
 
         private void Start(){
             CurrentPlayerId = 0;
+            DisplayPlayersInfo();
+            DisplayPlayersCards();
             while (Players.Count > 1)
             {
-                Console.Clear();
-                DisplayPlayers();
-
+                ClearUnder(Card.CardHeight+4);
                 PlayerRound();
             }
-            Console.WriteLine($"{Players[0]} a gagné la partie");
+            Console.WriteLine($"{Players[0].Name} a gagné la partie");
         }
 
         private void PlayerRound(){
+            int x = 0, y = Card.CardHeight+4, margin = 1;
+            if(CurrentPlayerId > 0)
+                x = CurrentPlayerId * Players[CurrentPlayerId - 1].GetUniqueCards().Count * (Card.CardWidth + margin) - CurrentPlayerId*(margin - 3);
             int diceValue = 0;
             Player p = Players[CurrentPlayerId];
-            Console.WriteLine($"### {p.Name} ###");
-
+            Console.SetCursorPosition(x, y);
+            Console.Write($"### {p.Name} ###");
+            y++;
             // Lance les dés
+            Console.SetCursorPosition(x, y);
             Console.WriteLine("Entrée - lancer le{0} dé{0}", dices.Count > 1 ? "s" : "");
+            y++;
+            Console.SetCursorPosition(x, y);
             Console.ReadLine();
             foreach (Dice d in dices)
             {
@@ -86,7 +93,9 @@ namespace MiniVille.Classes
                 diceValue += d.Value;
                 //d.Render(Console.CursorLeft, Console.CursorTop);
             }
-            Console.WriteLine("Valeur d{0} dé{1} : {2}", dices.Count > 1 ? "es" : "u", dices.Count > 1 ? "s" : "", diceValue);
+            Console.SetCursorPosition(x, y);
+            Console.Write("Valeur d{0} dé{1} : {2}", dices.Count > 1 ? "es" : "u", dices.Count > 1 ? "s" : "", diceValue);
+            y++;
             // Action des adversaires
             foreach (Player opponent in Players)
                 if(opponent != p)
@@ -99,22 +108,29 @@ namespace MiniVille.Classes
             foreach (Card c in p.Hand)
                 if ((c.Color == Card.CardColor.Vert || c.Color == Card.CardColor.Bleu) && c._activationNumbers.Contains<int>(diceValue))
                     c.ApplyEffect();
+            // Reaffichage des sous-sous
+            DisplayPlayersInfo();
             // Check la mort du player
             if (!p.IsAlive)
                 Players.Remove(p);
             // Buy phase
             int choiceNb = 1;
             foreach(CardName cardName in piles.Keys){
-                Console.WriteLine($"{choiceNb} - Acheter {cardName} ({piles[cardName].Cards[0].Price}$)");
+                Console.SetCursorPosition(x, y);
+                Console.Write($"{choiceNb} - Acheter {cardName} ({piles[cardName].Cards[0].Price}$)");
+                y++;
                 ++choiceNb;
             }
+            Console.SetCursorPosition(x, y);
             Console.WriteLine("Rien - Rien acheter");
-            Console.WriteLine("Entée - Valider le choix");
-            bool bought;
+            y++;
+            bool bought, passed;
             do
             {
+                Console.SetCursorPosition(x, y);
                 string response = Console.ReadLine();
                 bought = false;
+                passed = false;
                 switch (response)
                 {
                     case "1":
@@ -142,14 +158,20 @@ namespace MiniVille.Classes
                         bought = p.Buy(piles[CardName.Stade]);
                         break;
                     case "":
-                        Console.WriteLine($"{p.Name} n'a rien acheté");
-                        bought = true;
+                        passed = true;
                         break;
                     default:
-                        Console.WriteLine("Veuillez choisir un input valide");
+                        Console.SetCursorPosition(x, y);
+                        Console.Write("Veuillez choisir un input valide");
+                        y++;
                         break;
                 }
-            } while (!bought);
+            } while (!bought && !passed);
+            if (bought)
+            {
+                DisplayPlayersInfo();
+                DisplayPlayersCards();
+            }
             // End turn
             ++CurrentPlayerId;
             if (CurrentPlayerId > Players.Count - 1)
@@ -164,52 +186,66 @@ namespace MiniVille.Classes
                 }
                 Players.Add(p);
             }*/
+
+            Console.SetCursorPosition(x, y);
             Console.WriteLine("Entrée - Fin du tour");
+            y++;
+            Console.SetCursorPosition(x, y);
             Console.ReadLine();
-            Console.Clear();
         }
 
-        private void DisplayPlayers()
+        private void DisplayPlayersInfo()
         {
-            foreach(Player player in Players){
-                Console.WriteLine($"{player.Name} {player.NbPiece}$ : ");
-                foreach(Card card in player.Hand){
-                    card.Display();
-                }
-                Console.WriteLine("\n--------------------------------\n");
-            }
-            //DisplayCompliqué
-            /*int nbCards = 0;
-            foreach (Player p in Players)
-                nbCards += p.Hand.Count;
-            int x = 0, y = 0, margin = 1;
+            ClearUnder(0, 2);
+            int x = 0, margin = 1;
             string betweenPlayers = " | ";
-            Console.SetWindowSize(nbCards * (Card.CardWidth + margin + betweenPlayers.Length), Console.WindowHeight);
+            for (int i = 0 ; i < Players.Count ; i++)
+            {
+                Player p = Players[i];
+                if(i > 0)
+                {
+                    x += Players[i - 1].GetUniqueCards().Count * (Card.CardWidth + margin) - margin; 
+                    for (int j = 0; j < Card.CardHeight + 3; j++)
+                    {
+                        Console.SetCursorPosition(x, j);
+                        Console.Write(betweenPlayers);
+                    }
+                    x += betweenPlayers.Length;
+                }  
+                Console.SetCursorPosition(x, 0);
+                Console.Write("{0}", p.Name);
+                Console.SetCursorPosition(x + p.Name.Length + 2, 0);
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("{0}$", p.NbPiece);
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+        }
+
+        private void DisplayPlayersCards()
+        {
+            int x = 0, y = 2, margin = 1;
             for (int i = 0; i < Players.Count; i++)
             {
                 Player p = Players[i];
-                x = i * (p.Hand.Count*Card.CardWidth + margin);
-                y = 0;
                 if (i > 0)
+                    x += Players[i - 1].GetUniqueCards().Count * (Card.CardWidth + margin) - margin + 3;// 3 = betweenPlayers.Length dans displayPlayersCards
+                List<Card> uniqueCards = p.GetUniqueCards();
+                for (int j = 0; j < uniqueCards.Count; j++)
                 {
-                    x += betweenPlayers.Length * i;
-                    for (int j = 0; j < Card.CardHeight+2; j++)
-                    {
-                        Console.SetCursorPosition(x-3, y+j);
-                        Console.Write(betweenPlayers);
-                    }
-                }
-                Console.SetCursorPosition(x, y);
-                Console.Write("{0}", p.Name);
-                y += 2; // 2 = nb de ligne avant le render des cartes
-                for(int j = 0; j < p.Hand.Count; j++)
-                {
-                    Card c = p.Hand[j];
+                    Card c = uniqueCards[j];
                     c.Render(x + j * (Card.CardWidth + margin), y);
                 }
                 Console.WriteLine();
-            }*/
-            
+            }  
+        }
+        private void ClearUnder(int top, int size = 0)
+        {
+            int y = Console.CursorTop;
+            if (size == 0)
+                size = Console.WindowHeight - 1;
+            Console.SetCursorPosition(0, top);
+            Console.Write(String.Concat(Enumerable.Repeat(" ", Console.WindowWidth * (size - top))));
+            Console.SetCursorPosition(0, y);
         }
     }
 }

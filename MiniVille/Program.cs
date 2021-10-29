@@ -7,11 +7,11 @@ namespace MiniVille
     {
         static void Main(string[] args)
         {
-            Console.Clear();
-            Console.SetWindowPosition(0, 0);
+            Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
+
             Console.WriteLine("Bonjour ! et bienvenu dans");
             Console.WriteLine("###### MINI VILLE ######");
-            Console.WriteLine("adatation du jeu de société du même nom par Marin Ruelen, Léo Slomczynski et Tom Caudrillier \n");
+            Console.WriteLine("Adaptation du jeu de société du même nom par Marin Ruelen, Léo Slomczynski et Tom Caudrillier \n");
             Console.ReadLine();
             Console.Clear();
             //Choix du nombre de joueur
@@ -29,7 +29,7 @@ namespace MiniVille
             Console.Clear();
             //Choix du nombre de dés
             Console.Write("Nombre de dé(s) : ");
-            int nbDices;
+            int nbDices = 0;
             while (int.TryParse(Console.ReadLine(), out nbDices) && nbDices < 1)
             {
                 Console.WriteLine("Veuillez saisir un nombre valide (minimum 1)");
@@ -42,7 +42,7 @@ namespace MiniVille
             Console.Clear();
             //Choix du nombre de cartes dans une pile
             Console.Write("Nombre de cartes par pile : ");
-            int nbCards;
+            int nbCards = 0;
             while (int.TryParse(Console.ReadLine(), out nbCards) && nbCards < 10)
             {
                 Console.WriteLine("Veuillez saisir un nombre valide (minimum 10)");
@@ -55,7 +55,7 @@ namespace MiniVille
             Console.Clear();
             //Choix du nombre de piéce de départ par joueur
             Console.Write("Nombre de piéces de départ : ");
-            int nbPieces;
+            int nbPieces = 0;
             while (int.TryParse(Console.ReadLine(), out nbPieces) && nbPieces < 3)
             {
                 Console.WriteLine("Veuillez saisir un nombre valide (minimum 3)");

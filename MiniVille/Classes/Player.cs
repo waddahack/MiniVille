@@ -52,5 +52,24 @@ namespace MiniVille.Classes
             else
                 IsAlive = false;
         }
+
+        public List<Card> GetUniqueCards()
+        {
+            List<Card> uniqueCards = new List<Card>();
+            bool containSameCard;
+            foreach (Card c in Hand)
+            {
+                containSameCard = false;
+                foreach (Card uniqueCard in uniqueCards)
+                    if(c.Name == uniqueCard.Name)
+                    {
+                        containSameCard = true;
+                        break;
+                    }
+                if (!containSameCard)
+                    uniqueCards.Add(c);
+            }
+            return uniqueCards;
+        }
     }
 }

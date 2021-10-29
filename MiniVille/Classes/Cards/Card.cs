@@ -16,19 +16,21 @@ public abstract class Card{
     public Player Owner { get; set; }
 
     public Card(){
-        CardWidth = 19;
-        CardHeight = 15; // 6 mini
+        CardWidth = 15;
+        CardHeight = 11; // 6 mini
     }
 
-    public virtual void ApplyEffect()
-    {
-        Console.WriteLine($"{Owner.Name}, {Effet}");
-    }
+    public virtual void ApplyEffect(){}
 
     public void Render(int x, int y)
     {
         string topAndBotLine = "+" + String.Concat(Enumerable.Repeat("-", CardWidth - 2)) + "+";
         string activationNumbers = "{";
+        int cardIteration = 0;
+        foreach (Card c in Owner.Hand)
+            if (Name == c.Name)
+                cardIteration++;
+        string cardIterationString = "x" + cardIteration.ToString();
         List<string> effetLines = new List<string>();
         string line;
         int lineIndex = 0;
@@ -38,14 +40,34 @@ public abstract class Card{
         {
             effetLines.Remove(line);
             effetLines.Add(line.Substring(0, CardWidth-2));
-            effetLines.Add(line.Substring(CardWidth - 2, line.Length - CardWidth-2));
+            effetLines.Add(line.Substring(CardWidth - 2, line.Length - (CardWidth-2)));
+            line = effetLines[effetLines.Count - 1];
         }
         Console.SetCursorPosition(x, y);
+        string space;
+        space = String.Concat(Enumerable.Repeat(" ", (int)MathF.Floor((CardWidth - cardIterationString.Length) / 2)));
+        Console.Write("{1}{0}{2}", cardIterationString, space, space + (cardIterationString.Length % 2 == 0 ? " " : ""));
+        y++;
+        Console.SetCursorPosition(x, y);
+        switch (Color)
+        {
+            case CardColor.Bleu:
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                break;
+            case CardColor.Vert:
+                Console.ForegroundColor = ConsoleColor.Green;
+                break;
+            case CardColor.Rouge:
+                Console.ForegroundColor = ConsoleColor.Red;
+                break;
+            default:
+                Console.ForegroundColor = ConsoleColor.White;
+                break;
+        }
         Console.Write(topAndBotLine);
         for(int i = 0; i < CardHeight-2; i++)
         {
             Console.SetCursorPosition(x, y+i+1);
-            string space;
             if (i == 0)
             {
                 space = String.Concat(Enumerable.Repeat(" ", (int)MathF.Floor((CardWidth - 2 - Name.Length) / 2)));
@@ -70,6 +92,7 @@ public abstract class Card{
         }
         Console.SetCursorPosition(x, y+CardHeight-1);
         Console.Write(topAndBotLine);
+        Console.ForegroundColor = ConsoleColor.White;
         /*
         Console.WriteLine("+-----------+");
         Console.WriteLine("|Boulangerie|");

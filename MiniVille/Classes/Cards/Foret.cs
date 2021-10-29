@@ -18,7 +18,6 @@ namespace MiniVille.Classes.Cards
         public override void ApplyEffect()
         {
             this.Owner.GainCoins(1);
-            base.ApplyEffect();
         }
     }
 }

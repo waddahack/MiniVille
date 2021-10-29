@@ -39,3 +39,16 @@ D:\Documents\Cours\Enjmin\Licence Info\USRS46 Programmation objet\MiniVille\Mini
 D:\Documents\Cours\Enjmin\Licence Info\USRS46 Programmation objet\MiniVille\MiniVille\obj\Debug\netcoreapp3.1\MiniVille.dll
 D:\Documents\Cours\Enjmin\Licence Info\USRS46 Programmation objet\MiniVille\MiniVille\obj\Debug\netcoreapp3.1\MiniVille.pdb
 D:\Documents\Cours\Enjmin\Licence Info\USRS46 Programmation objet\MiniVille\MiniVille\obj\Debug\netcoreapp3.1\MiniVille.genruntimeconfig.cache
+F:\Programmation\MiniVille\MiniVille\bin\Debug\netcoreapp3.1\MiniVille.exe
+F:\Programmation\MiniVille\MiniVille\bin\Debug\netcoreapp3.1\MiniVille.deps.json
+F:\Programmation\MiniVille\MiniVille\bin\Debug\netcoreapp3.1\MiniVille.runtimeconfig.json
+F:\Programmation\MiniVille\MiniVille\bin\Debug\netcoreapp3.1\MiniVille.runtimeconfig.dev.json
+F:\Programmation\MiniVille\MiniVille\bin\Debug\netcoreapp3.1\MiniVille.dll
+F:\Programmation\MiniVille\MiniVille\bin\Debug\netcoreapp3.1\MiniVille.pdb
+F:\Programmation\MiniVille\MiniVille\obj\Debug\netcoreapp3.1\MiniVille.csprojAssemblyReference.cache
+F:\Programmation\MiniVille\MiniVille\obj\Debug\netcoreapp3.1\MiniVille.AssemblyInfoInputs.cache
+F:\Programmation\MiniVille\MiniVille\obj\Debug\netcoreapp3.1\MiniVille.AssemblyInfo.cs
+F:\Programmation\MiniVille\MiniVille\obj\Debug\netcoreapp3.1\MiniVille.csproj.CoreCompileInputs.cache
+F:\Programmation\MiniVille\MiniVille\obj\Debug\netcoreapp3.1\MiniVille.dll
+F:\Programmation\MiniVille\MiniVille\obj\Debug\netcoreapp3.1\MiniVille.pdb
+F:\Programmation\MiniVille\MiniVille\obj\Debug\netcoreapp3.1\MiniVille.genruntimeconfig.cache

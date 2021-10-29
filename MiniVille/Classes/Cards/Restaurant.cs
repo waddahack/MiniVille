@@ -19,7 +19,6 @@ namespace MiniVille.Classes.Cards
         {
             this.Owner.GainCoins(2);
             Game.Players[Game.CurrentPlayerId].LoseCoins(2);
-            base.ApplyEffect();
         }
     }
 }
