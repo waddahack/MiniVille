@@ -8,19 +8,19 @@
     ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
-    "C:\\Users\\Marin\\.nuget\\packages\\": {}
+    "C:\\Users\\MarinRuelen\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\Programmation\\MiniVille\\MiniVille\\MiniVille.csproj",
+      "projectUniqueName": "D:\\C#\\MiniVille\\MiniVille\\MiniVille.csproj",
       "projectName": "MiniVille",
-      "projectPath": "F:\\Programmation\\MiniVille\\MiniVille\\MiniVille.csproj",
-      "packagesPath": "C:\\Users\\Marin\\.nuget\\packages\\",
-      "outputPath": "F:\\Programmation\\MiniVille\\MiniVille\\obj\\",
+      "projectPath": "D:\\C#\\MiniVille\\MiniVille\\MiniVille.csproj",
+      "packagesPath": "C:\\Users\\MarinRuelen\\.nuget\\packages\\",
+      "outputPath": "D:\\C#\\MiniVille\\MiniVille\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Marin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\MarinRuelen\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -60,7 +60,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
       }
     }
   }

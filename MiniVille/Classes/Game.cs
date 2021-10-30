@@ -8,7 +8,7 @@ namespace MiniVille.Classes
 {
     public class Game
     {
-        private Dictionary<CardName, Pile> piles;
+        public static Dictionary<CardName, Pile> Piles { get; set; }
         private Player bank{ get; set; }
         public static List<Player> Players { get; private set; }
         private static List<Dice> dices;
@@ -19,7 +19,7 @@ namespace MiniVille.Classes
             for (int i = 0; i < nbDice; i++)
                 dices.Add(new Dice());
 
-            piles = new Dictionary<CardName, Pile>();
+            Piles = new Dictionary<CardName, Pile>();
             Pile pileChampDeBle = new Pile();
             Pile pileFerme = new Pile();
             Pile pileBoulangerie = new Pile();
@@ -39,14 +39,14 @@ namespace MiniVille.Classes
                 pileRestaurant.PutBack(new Restaurant());
                 pileStade.PutBack(new Stade());
             }
-            piles.Add(CardName.ChampDeBle, pileChampDeBle);
-            piles.Add(CardName.Boulangerie, pileBoulangerie);
-            piles.Add(CardName.Ferme, pileFerme);
-            piles.Add(CardName.Cafe, pileCafe);
-            piles.Add(CardName.Superette, pileSuperette);
-            piles.Add(CardName.Foret, pileForet);
-            piles.Add(CardName.Restaurant, pileRestaurant);
-            piles.Add(CardName.Stade, pileStade);
+            Piles.Add(CardName.ChampDeBle, pileChampDeBle);
+            Piles.Add(CardName.Boulangerie, pileBoulangerie);
+            Piles.Add(CardName.Ferme, pileFerme);
+            Piles.Add(CardName.Cafe, pileCafe);
+            Piles.Add(CardName.Superette, pileSuperette);
+            Piles.Add(CardName.Foret, pileForet);
+            Piles.Add(CardName.Restaurant, pileRestaurant);
+            Piles.Add(CardName.Stade, pileStade);
 
             Players = new List<Player>();
             for (int i = 0; i < nbPlayer; i++)
@@ -74,56 +74,73 @@ namespace MiniVille.Classes
 
         private void PlayerRound(){
             int x = 0, y = Card.CardHeight+4, margin = 1;
+            int moneyEarned;
             if(CurrentPlayerId > 0)
                 x = CurrentPlayerId * Players[CurrentPlayerId - 1].GetUniqueCards().Count * (Card.CardWidth + margin) - CurrentPlayerId*(margin - 3);
             int diceValue = 0;
             Player p = Players[CurrentPlayerId];
-            Console.SetCursorPosition(x, y);
-            Console.Write($"### {p.Name} ###");
-            y++;
+            Display($"### {p.Name} ###", x, ref y);
             // Lance les dés
-            Console.SetCursorPosition(x, y);
-            Console.WriteLine("Entrée - lancer le{0} dé{0}", dices.Count > 1 ? "s" : "");
-            y++;
+            Display($"Entrée - lancer les dés", x, ref y);
             Console.SetCursorPosition(x, y);
             Console.ReadLine();
+            ClearUnder(y-1, 1);
             foreach (Dice d in dices)
             {
                 d.Throw();
                 diceValue += d.Value;
                 //d.Render(Console.CursorLeft, Console.CursorTop);
             }
-            Console.SetCursorPosition(x, y);
-            Console.Write("Valeur d{0} dé{1} : {2}", dices.Count > 1 ? "es" : "u", dices.Count > 1 ? "s" : "", diceValue);
-            y++;
+            Display($"Valeur des dés : {diceValue}", x, ref y);
+            // Action du joueur
+            moneyEarned = p.NbPiece;
+            foreach (Card c in p.Hand)
+                if ((c.Color == Card.CardColor.Vert || c.Color == Card.CardColor.Bleu) && c._activationNumbers.Contains<int>(diceValue))
+                    c.ApplyEffect();
+            moneyEarned = p.NbPiece - moneyEarned;
+            if (moneyEarned > 0)
+            {
+                Display($"{p.Name}", x, ref y, false);
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Display($"+{moneyEarned}$", x + p.Name.Length + 1, ref y);
+                Console.ForegroundColor = ConsoleColor.White;
+            }
             // Action des adversaires
             foreach (Player opponent in Players)
                 if(opponent != p)
                 {
+                    moneyEarned = opponent.NbPiece;
                     foreach (Card c in opponent.Hand)
                         if ((c.Color == Card.CardColor.Rouge || c.Color == Card.CardColor.Bleu) && c._activationNumbers.Contains<int>(diceValue))
                             c.ApplyEffect();
+                    moneyEarned = opponent.NbPiece - moneyEarned;
+                    if (moneyEarned > 0)
+                    {
+                        Display($"{opponent.Name}", x, ref y, false);
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Display($"+{moneyEarned}$", x+opponent.Name.Length+1, ref y);
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }     
                 }
-            // Action du joueur
-            foreach (Card c in p.Hand)
-                if ((c.Color == Card.CardColor.Vert || c.Color == Card.CardColor.Bleu) && c._activationNumbers.Contains<int>(diceValue))
-                    c.ApplyEffect();
             // Reaffichage des sous-sous
             DisplayPlayersInfo();
             // Check la mort du player
             if (!p.IsAlive)
                 Players.Remove(p);
             // Buy phase
-            int choiceNb = 1;
-            foreach(CardName cardName in piles.Keys){
-                Console.SetCursorPosition(x, y);
-                Console.Write($"{choiceNb} - Acheter {cardName} ({piles[cardName].Cards[0].Price}$)");
-                y++;
-                ++choiceNb;
-            }
-            Console.SetCursorPosition(x, y);
-            Console.WriteLine("Rien - Rien acheter");
+            Console.ReadLine();
             y++;
+            int i = 0;
+            foreach (Pile pile in Piles.Values) {
+                if (pile.Cards.Count > 0)
+                {
+                    pile.Cards[0].Render(x+i, y);
+                    i += Card.CardWidth + margin;
+                }
+            }
+            y += Card.CardHeight/2;
+            Display("Rien - Rien acheter", x+i, ref y);
+            y += Card.CardHeight / 2 + 1;
             bool bought, passed;
             do
             {
@@ -134,36 +151,34 @@ namespace MiniVille.Classes
                 switch (response)
                 {
                     case "1":
-                        bought = p.Buy(piles[CardName.ChampDeBle]);
+                        bought = p.Buy(Piles[CardName.ChampDeBle]);
                         break;
                     case "2":
-                        bought = p.Buy(piles[CardName.Boulangerie]);
+                        bought = p.Buy(Piles[CardName.Boulangerie]);
                         break;
                     case "3":
-                        bought = p.Buy(piles[CardName.Ferme]);
+                        bought = p.Buy(Piles[CardName.Ferme]);
                         break;
                     case "4":
-                        bought = p.Buy(piles[CardName.Cafe]);
+                        bought = p.Buy(Piles[CardName.Cafe]);
                         break;
                     case "5":
-                        bought = p.Buy(piles[CardName.Superette]);
+                        bought = p.Buy(Piles[CardName.Superette]);
                         break;
                     case "6":
-                        bought = p.Buy(piles[CardName.Foret]);
+                        bought = p.Buy(Piles[CardName.Foret]);
                         break;
                     case "7":
-                        bought = p.Buy(piles[CardName.Restaurant]);
+                        bought = p.Buy(Piles[CardName.Restaurant]);
                         break;
                     case "8":
-                        bought = p.Buy(piles[CardName.Stade]);
+                        bought = p.Buy(Piles[CardName.Stade]);
                         break;
                     case "":
                         passed = true;
                         break;
                     default:
-                        Console.SetCursorPosition(x, y);
-                        Console.Write("Veuillez choisir un input valide");
-                        y++;
+                        Display("Veuillez choisir un input valide", x, ref y);
                         break;
                 }
             } while (!bought && !passed);
@@ -187,10 +202,7 @@ namespace MiniVille.Classes
                 Players.Add(p);
             }*/
 
-            Console.SetCursorPosition(x, y);
-            Console.WriteLine("Entrée - Fin du tour");
-            y++;
-            Console.SetCursorPosition(x, y);
+            Display("Entrée - Fin du tour", x, ref y);
             Console.ReadLine();
         }
 
@@ -238,19 +250,29 @@ namespace MiniVille.Classes
                 Console.WriteLine();
             }  
         }
+
+        private void Display(string text, int x, ref int y, bool upY = true)
+        {
+            Console.SetCursorPosition(x, y);
+            Console.Write(text);
+            if(upY)
+                y++;
+        }
         private void ClearUnder(int top, int size = 0)
         {
-            int y = Console.CursorTop;
+            int x = Console.CursorLeft, y = Console.CursorTop;
+            int windX = Console.WindowLeft, windY = Console.WindowTop;
             if (size == 0)
                 size = Console.WindowHeight - 1;
             Console.SetCursorPosition(0, top);
-            Console.Write(String.Concat(Enumerable.Repeat(" ", Console.WindowWidth * (size - top))));
-            Console.SetCursorPosition(0, y);
+            Console.Write(String.Concat(Enumerable.Repeat(" ", Console.BufferWidth * size)));
+            Console.SetCursorPosition(x, y);
+            Console.SetWindowPosition(windX, windY);
         }
     }
 }
 
-enum CardName {
+public enum CardName {
     ChampDeBle,
     Boulangerie,
     Ferme,

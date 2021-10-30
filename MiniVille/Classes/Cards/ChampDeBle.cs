@@ -9,6 +9,7 @@ namespace MiniVille.Classes.Cards
         public ChampDeBle() : base()
         {
             Name = "Champ de blé";
+            CardName = CardName.ChampDeBle;
             Color = CardColor.Bleu;
             _activationNumbers = new int[] { 1 };
             Price = 1;

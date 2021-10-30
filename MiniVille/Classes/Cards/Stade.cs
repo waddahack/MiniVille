@@ -8,6 +8,7 @@ namespace MiniVille.Classes.Cards
     {
         public Stade() : base(){
             Name = "Stade";
+            CardName = CardName.Stade;
             Color = CardColor.Bleu;
             _activationNumbers = new int[] { 6 };
             Price = 6;

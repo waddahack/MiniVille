@@ -9,6 +9,7 @@ namespace MiniVille.Classes.Cards
         public Superette() : base()
         {
             Name = "Superette";
+            CardName = CardName.Superette;
             Color = CardColor.Vert;
             Price = 2;
             _activationNumbers = new int[] { 4 };

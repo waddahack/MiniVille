@@ -9,6 +9,7 @@ public abstract class Card{
     public int[] _activationNumbers {get; protected set; }
     public int Price {get; protected set; }
     public string Name { get; set; }
+    public CardName CardName { get; set; }
     public string Effet {get; set;}
     public static int CardWidth { get; set; }
     public static int CardHeight { get; set; }
@@ -16,6 +17,7 @@ public abstract class Card{
     public Player Owner { get; set; }
 
     public Card(){
+        Owner = null;
         CardWidth = 15;
         CardHeight = 11; // 6 mini
     }
@@ -27,9 +29,12 @@ public abstract class Card{
         string topAndBotLine = "+" + String.Concat(Enumerable.Repeat("-", CardWidth - 2)) + "+";
         string activationNumbers = "{";
         int cardIteration = 0;
-        foreach (Card c in Owner.Hand)
-            if (Name == c.Name)
-                cardIteration++;
+        if (Owner != null)
+            foreach (Card c in Owner.Hand)
+                if (Name == c.Name)
+                    cardIteration++;
+        /*else
+            cardIteration = Game.Piles[CardName].Cards.Count;*/
         string cardIterationString = "x" + cardIteration.ToString();
         List<string> effetLines = new List<string>();
         string line;
@@ -43,6 +48,8 @@ public abstract class Card{
             effetLines.Add(line.Substring(CardWidth - 2, line.Length - (CardWidth-2)));
             line = effetLines[effetLines.Count - 1];
         }
+        if (x >= Console.WindowWidth)
+            Console.SetWindowPosition(x, 0);
         Console.SetCursorPosition(x, y);
         string space;
         space = String.Concat(Enumerable.Repeat(" ", (int)MathF.Floor((CardWidth - cardIterationString.Length) / 2)));
@@ -93,6 +100,7 @@ public abstract class Card{
         Console.SetCursorPosition(x, y+CardHeight-1);
         Console.Write(topAndBotLine);
         Console.ForegroundColor = ConsoleColor.White;
+        Console.SetWindowPosition(0, 0);
         /*
         Console.WriteLine("+-----------+");
         Console.WriteLine("|Boulangerie|");
