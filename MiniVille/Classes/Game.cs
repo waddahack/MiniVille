@@ -76,24 +76,23 @@ namespace MiniVille.Classes
             int x = 0, y = Card.CardHeight+4, margin = 1;
             int moneyEarned;
             for(int j = 0; j < CurrentPlayerId; j++)
-            {
                 x += Players[j].GetUniqueCards().Count * (Card.CardWidth + margin) - margin + 3; // 3 = betweenPlayers.Length
-            }
             int diceValue = 0;
             Player p = Players[CurrentPlayerId];
-            Display($"### {p.Name} ###", x, ref y);
+            CenterView(x);
+            Display($"*** {p.Name} ***", x, ref y);
             // Lance les dés
-            Display($"Entrée - lancer les dés", x, ref y);
-            Console.SetCursorPosition(x, y);
             Console.ReadLine();
-            ClearUnder(x, y-1, 1);
-            foreach (Dice d in dices)
+            ClearUnder(x, y, 1);
+            y++;
+            for(int j = 0; j < dices.Count; j++)
             {
+                Dice d = dices[j];
                 d.Throw();
                 diceValue += d.Value;
-                //d.Render(Console.CursorLeft, Console.CursorTop);
+                d.Render(x+j*Dice.DiceWidth+1, y);
             }
-            Display($"Valeur des dés : {diceValue}", x, ref y);
+            y += Dice.DiceHeight+1;
             // Action du joueur
             moneyEarned = p.NbPiece;
             foreach (Card c in p.Hand)
@@ -122,7 +121,7 @@ namespace MiniVille.Classes
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Display($"+{moneyEarned}$", x+opponent.Name.Length+1, ref y);
                         Console.ForegroundColor = ConsoleColor.White;
-                    }     
+                    }
                 }
             // Reaffichage des sous-sous
             DisplayPlayersInfo();
@@ -130,7 +129,7 @@ namespace MiniVille.Classes
             if (!p.IsAlive)
                 Players.Remove(p);
             // Buy phase
-            Console.SetCursorPosition(x, y);
+            CenterView(x);
             Console.ReadLine();
             y++;
             int i = 0;
@@ -147,12 +146,12 @@ namespace MiniVille.Classes
             Display("Rien acheter", x+i, ref y);
             y += Card.CardHeight / 2 + 1;
 
+            CenterView(x);
             bool bought = false;
-            CardName choice;
-            choice = CardChoice(x, y, choices);
+            CardName choice = CardChoice(x, y, choices);
             y -= Card.CardHeight + 2;
             ClearUnder(x, y);
-            Console.SetCursorPosition(x, y);
+            CenterView(x);
             if (choice != CardName.Void)
                 bought = p.Buy(Piles[choice]);
             if (bought)
@@ -172,7 +171,7 @@ namespace MiniVille.Classes
                     if(player != p)
                         Players.Remove(player);*/
 
-            Display("Entrée - Fin du tour", x, ref y);
+            Display("Fin du tour", x, ref y);
             Console.ReadLine();
         }
 
@@ -229,6 +228,7 @@ namespace MiniVille.Classes
                 Console.Write("{0}$", p.NbPiece);
                 Console.ForegroundColor = ConsoleColor.White;
             }
+            Console.SetCursorPosition(0, 0);
         }
 
         private void DisplayPlayersCards()
@@ -245,7 +245,6 @@ namespace MiniVille.Classes
                     Card c = uniqueCards[j];
                     c.Render(x + j * (Card.CardWidth + margin), y);
                 }
-                Console.WriteLine();
             }  
         }
 
@@ -253,10 +252,10 @@ namespace MiniVille.Classes
         {
             Console.SetCursorPosition(x, y);
             Console.Write(text);
-            //Console.SetCursorPosition(Console.CursorLeft, Console.CursorTop);
-            Console.SetWindowPosition(x, 0);
+            Console.SetCursorPosition(x, y);
             if (upY)
                 y++;
+            CenterView(x);
         }
         private void ClearUnder(int left, int top, int size = 0)
         {
@@ -266,6 +265,16 @@ namespace MiniVille.Classes
             Console.SetCursorPosition(left, top);
             Console.Write(String.Concat(Enumerable.Repeat(" ", Console.BufferWidth * size)));
             Console.SetWindowPosition(windX, 0);
+        }
+
+        private void CenterView(int baseX)
+        {
+            int limit = Console.WindowWidth / 2;
+            if (baseX >= limit)
+                Console.SetWindowPosition(baseX-limit, 0);
+            else
+                Console.SetWindowPosition(0, 0);
+
         }
     }
 }

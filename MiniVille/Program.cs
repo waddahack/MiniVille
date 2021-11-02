@@ -7,7 +7,7 @@ namespace MiniVille
     {
         static void Main(string[] args)
         {
-            Console.CursorVisible = false;
+            //Console.CursorVisible = false;
             Console.SetWindowSize(Console.LargestWindowWidth-30, Console.LargestWindowHeight-20);
             Console.SetBufferSize(2000, 500);
 
@@ -15,6 +15,7 @@ namespace MiniVille
             Console.WriteLine("Adaptation du jeu de société du même nom par Marin Ruelen, Léo Slomczynski et Tom Caudrillier \n");
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("/!\\ Ne pas resize la fenetre de la console /!\\");
+            Console.WriteLine("/!\\ Petite police recommandé (environ 16, clique droit -> propriété -> poilce) /!\\");
             Console.ForegroundColor = ConsoleColor.White;
             Console.ReadLine();
             Console.Clear();

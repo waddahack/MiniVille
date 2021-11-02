@@ -28,13 +28,16 @@ public abstract class Card{
     {
         string topAndBotLine = "+" + String.Concat(Enumerable.Repeat("-", CardWidth - 2)) + "+";
         string activationNumbers = "{";
+        string price = Price.ToString()+"$";
         int cardIteration = 0;
         if (Owner != null)
+        {
             foreach (Card c in Owner.Hand)
                 if (Name == c.Name)
                     cardIteration++;
-        /*else
-            cardIteration = Game.Piles[CardName].Cards.Count;*/
+        }      
+        else
+            cardIteration = Game.Piles[CardName].Cards.Count;
         string cardIterationString = "x" + cardIteration.ToString();
         List<string> effetLines = new List<string>();
         string line;
@@ -87,6 +90,16 @@ public abstract class Card{
                 space = String.Concat(Enumerable.Repeat(" ", (int)MathF.Floor((CardWidth - 2 - activationNumbers.Length) / 2)));
                 Console.Write("|{1}{0}{2}|", activationNumbers, space, space + (activationNumbers.Length % 2 == 0 ? " " : ""));
             }
+            else if (i == 2 && Owner == null)
+            {
+                space = String.Concat(Enumerable.Repeat(" ", (int)MathF.Floor((CardWidth - 2 - price.Length) / 2)));
+                Console.Write("|");
+                ConsoleColor color = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("{1}{0}{2}", price, space, space + (price.Length % 2 == 0 ? " " : ""));
+                Console.ForegroundColor = color;
+                Console.Write("|");
+            }
             else if(i >= (CardHeight - 2 - 1) - (effetLines.Count - 1))
             {
                 line = effetLines[lineIndex];
@@ -100,7 +113,6 @@ public abstract class Card{
         Console.SetCursorPosition(x, y+CardHeight-1);
         Console.Write(topAndBotLine);
         Console.ForegroundColor = ConsoleColor.White;
-        Console.SetWindowPosition(0, 0);
         /*
         Console.WriteLine("+-----------+");
         Console.WriteLine("|Boulangerie|");
