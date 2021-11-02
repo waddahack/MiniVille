@@ -66,7 +66,7 @@ namespace MiniVille.Classes
             DisplayPlayersCards();
             while (Players.Count > 1)
             {
-                ClearUnder(Card.CardHeight+4);
+                ClearUnder(0, Card.CardHeight+4);
                 PlayerRound();
             }
             Console.WriteLine($"{Players[0].Name} a gagné la partie");
@@ -75,8 +75,10 @@ namespace MiniVille.Classes
         private void PlayerRound(){
             int x = 0, y = Card.CardHeight+4, margin = 1;
             int moneyEarned;
-            if(CurrentPlayerId > 0)
-                x = CurrentPlayerId * Players[CurrentPlayerId - 1].GetUniqueCards().Count * (Card.CardWidth + margin) - CurrentPlayerId*(margin - 3);
+            for(int j = 0; j < CurrentPlayerId; j++)
+            {
+                x += Players[j].GetUniqueCards().Count * (Card.CardWidth + margin) - margin + 3; // 3 = betweenPlayers.Length
+            }
             int diceValue = 0;
             Player p = Players[CurrentPlayerId];
             Display($"### {p.Name} ###", x, ref y);
@@ -84,7 +86,7 @@ namespace MiniVille.Classes
             Display($"Entrée - lancer les dés", x, ref y);
             Console.SetCursorPosition(x, y);
             Console.ReadLine();
-            ClearUnder(y-1, 1);
+            ClearUnder(x, y-1, 1);
             foreach (Dice d in dices)
             {
                 d.Throw();
@@ -128,12 +130,15 @@ namespace MiniVille.Classes
             if (!p.IsAlive)
                 Players.Remove(p);
             // Buy phase
+            Console.SetCursorPosition(x, y);
             Console.ReadLine();
             y++;
             int i = 0;
+            List<Card> choices = new List<Card>();
             foreach (Pile pile in Piles.Values) {
                 if (pile.Cards.Count > 0)
                 {
+                    choices.Add(pile.Cards[0]);
                     pile.Cards[0].Render(x+i, y);
                     i += Card.CardWidth + margin;
                 }
@@ -143,37 +148,13 @@ namespace MiniVille.Classes
             y += Card.CardHeight / 2 + 1;
 
             bool bought = false;
-            int choice = ArrowChoice(x, y);
+            CardName choice;
+            choice = CardChoice(x, y, choices);
             y -= Card.CardHeight + 2;
-            ClearUnder(y);
+            ClearUnder(x, y);
             Console.SetCursorPosition(x, y);
-            switch (choice)
-            {
-                case 0:
-                    bought = p.Buy(Piles[CardName.ChampDeBle]);
-                    break;
-                case 1:
-                    bought = p.Buy(Piles[CardName.Boulangerie]);
-                    break;
-                case 2:
-                    bought = p.Buy(Piles[CardName.Ferme]);
-                    break;
-                case 3:
-                    bought = p.Buy(Piles[CardName.Cafe]);
-                    break;
-                case 4:
-                    bought = p.Buy(Piles[CardName.Superette]);
-                    break;
-                case 5:
-                    bought = p.Buy(Piles[CardName.Foret]);
-                    break;
-                case 6:
-                    bought = p.Buy(Piles[CardName.Restaurant]);
-                    break;
-                case 7:
-                    bought = p.Buy(Piles[CardName.Stade]);
-                    break;
-            }
+            if (choice != CardName.Void)
+                bought = p.Buy(Piles[choice]);
             if (bought)
             {
                 DisplayPlayersInfo();
@@ -195,34 +176,37 @@ namespace MiniVille.Classes
             Console.ReadLine();
         }
 
-        private int ArrowChoice(int x, int y)
+        private CardName CardChoice(int x, int y, List<Card> choices)
         {
             string arrow = "<"+String.Concat(Enumerable.Repeat("-", Card.CardWidth-2))+">";
             string space;
-            int nbChoices = 0;
-            foreach (Pile p in Piles.Values)
-                if (p.Cards.Count > 0)
-                    nbChoices++;
             int choice = 0;
             ConsoleKey key;
+            bool canBuy;
             do
             {
                 space = String.Concat(Enumerable.Repeat(" ", choice*(Card.CardWidth+1)));
-                ClearUnder(y, 1);
+                ClearUnder(x, y, 1);
                 Display(space+arrow, x, ref y, false);
                 key = Console.ReadKey().Key;
                 if (key == ConsoleKey.LeftArrow && choice > 0)
                     choice--;
-                else if (key == ConsoleKey.RightArrow && choice < nbChoices)
+                else if (key == ConsoleKey.RightArrow && choice < choices.Count)
                     choice++;
+                if (choice >= choices.Count || Players[CurrentPlayerId].NbPiece >= choices[choice].Price)
+                    canBuy = true;
+                else
+                    canBuy = false;
             }
-            while (key != ConsoleKey.Enter);
-            return choice;
+            while (key != ConsoleKey.Enter || !canBuy);
+            if (choice >= choices.Count)
+                return CardName.Void;
+            return choices[choice].CardName;
         }
 
         private void DisplayPlayersInfo()
         {
-            ClearUnder(0, 2);
+            ClearUnder(0, 0, 2);
             int x = 0, margin = 1;
             string betweenPlayers = " | ";
             for (int i = 0 ; i < Players.Count ; i++)
@@ -268,21 +252,20 @@ namespace MiniVille.Classes
         private void Display(string text, int x, ref int y, bool upY = true)
         {
             Console.SetCursorPosition(x, y);
-            //Console.SetWindowPosition(x, 0);
             Console.Write(text);
-            if(upY)
+            //Console.SetCursorPosition(Console.CursorLeft, Console.CursorTop);
+            Console.SetWindowPosition(x, 0);
+            if (upY)
                 y++;
         }
-        private void ClearUnder(int top, int size = 0)
+        private void ClearUnder(int left, int top, int size = 0)
         {
-            int x = Console.CursorLeft, y = Console.CursorTop;
-            int windX = Console.WindowLeft, windY = Console.WindowTop;
+            int windX = Console.WindowLeft;
             if (size == 0)
                 size = Console.WindowHeight - 1;
-            Console.SetCursorPosition(0, top);
+            Console.SetCursorPosition(left, top);
             Console.Write(String.Concat(Enumerable.Repeat(" ", Console.BufferWidth * size)));
-            //Console.SetCursorPosition(x, y);
-            Console.SetWindowPosition(windX, windY);
+            Console.SetWindowPosition(windX, 0);
         }
     }
 }
@@ -295,5 +278,6 @@ public enum CardName {
     Superette,
     Foret,
     Restaurant,
-    Stade
+    Stade,
+    Void
 }

@@ -9,7 +9,7 @@ namespace MiniVille
         {
             Console.CursorVisible = false;
             Console.SetWindowSize(Console.LargestWindowWidth-30, Console.LargestWindowHeight-20);
-            Console.SetBufferSize(500, 500);
+            Console.SetBufferSize(2000, 500);
 
             Console.WriteLine("###### MINI VILLE ######");
             Console.WriteLine("Adaptation du jeu de société du même nom par Marin Ruelen, Léo Slomczynski et Tom Caudrillier \n");
