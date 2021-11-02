@@ -77,7 +77,7 @@ namespace MiniVille.Classes
             int moneyEarned;
             for(int j = 0; j < CurrentPlayerId; j++)
                 x += Players[j].GetUniqueCards().Count * (Card.CardWidth + margin) - margin + 3; // 3 = betweenPlayers.Length
-            int diceValue = 0;
+            List<int> diceValues = new List<int>();
             Player p = Players[CurrentPlayerId];
             CenterView(x);
             Display($"*** {p.Name} ***", x, ref y);
@@ -89,15 +89,16 @@ namespace MiniVille.Classes
             {
                 Dice d = dices[j];
                 d.Throw();
-                diceValue += d.Value;
+                diceValues.Add(d.Value);
                 d.Render(x+j*Dice.DiceWidth+1, y);
             }
             y += Dice.DiceHeight+1;
             // Action du joueur
             moneyEarned = p.NbPiece;
             foreach (Card c in p.Hand)
-                if ((c.Color == Card.CardColor.Vert || c.Color == Card.CardColor.Bleu) && c._activationNumbers.Contains<int>(diceValue))
-                    c.ApplyEffect();
+                foreach (int diceValue in diceValues)
+                    if ((c.Color == Card.CardColor.Vert || c.Color == Card.CardColor.Bleu) && c._activationNumbers.Contains<int>(diceValue))
+                        c.ApplyEffect();
             moneyEarned = p.NbPiece - moneyEarned;
             if (moneyEarned > 0)
             {
@@ -112,8 +113,9 @@ namespace MiniVille.Classes
                 {
                     moneyEarned = opponent.NbPiece;
                     foreach (Card c in opponent.Hand)
-                        if ((c.Color == Card.CardColor.Rouge || c.Color == Card.CardColor.Bleu) && c._activationNumbers.Contains<int>(diceValue))
-                            c.ApplyEffect();
+                        foreach (int diceValue in diceValues)
+                            if ((c.Color == Card.CardColor.Rouge || c.Color == Card.CardColor.Bleu) && c._activationNumbers.Contains<int>(diceValue))
+                                c.ApplyEffect();
                     moneyEarned = opponent.NbPiece - moneyEarned;
                     if (moneyEarned > 0)
                     {
@@ -166,10 +168,11 @@ namespace MiniVille.Classes
             if (!p.IsAlive)
                 Players.Remove(p);
             //on tue tous les autre joueur car p est le gagnant
-            /*if (p.NbPiece >= 20)
-                foreach (Player player in Players)
-                    if(player != p)
-                        Players.Remove(player);*/
+            if (p.NbPiece >= 20)
+            {
+                Players = new List<Player>();
+                Players.Add(p);
+            }
 
             Display("Fin du tour", x, ref y);
             Console.ReadLine();

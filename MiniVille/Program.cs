@@ -19,55 +19,71 @@ namespace MiniVille
             Console.ForegroundColor = ConsoleColor.White;
             Console.ReadLine();
             Console.Clear();
+            
             //Choix du nombre de joueur
             Console.Write("Nombre de joueurs : ");
             int nbJoueurs;
-            while (int.TryParse(Console.ReadLine(), out nbJoueurs) && nbJoueurs < 2)
+            string nbJoueursResponse = Console.ReadLine();
+            while (int.TryParse(nbJoueursResponse, out nbJoueurs) && nbJoueurs < 2)
             {
                 Console.WriteLine("Veuillez saisir un nombre valide (minimum 2)");
                 Console.ReadLine();
                 Console.Clear();
                 Console.Write("Nombre de joueurs : ");
+                nbJoueursResponse = Console.ReadLine();
             }
+            if (nbJoueursResponse == "") nbJoueurs = 2;
             Console.WriteLine($"Vous avez choisi {nbJoueurs} de joueurs");
             Console.ReadLine();
             Console.Clear();
+            
             //Choix du nombre de dés
             Console.Write("Nombre de dé(s) : ");
             int nbDices = 0;
-            while (int.TryParse(Console.ReadLine(), out nbDices) && nbDices < 1)
+            string nbDicesResponse = Console.ReadLine();
+            while (int.TryParse(nbDicesResponse, out nbDices) && nbDices < 1)
             {
                 Console.WriteLine("Veuillez saisir un nombre valide (minimum 1)");
                 Console.ReadLine();
                 Console.Clear();
                 Console.Write("Nombre de dé(s) : ");
+                nbDicesResponse = Console.ReadLine();
             }
+            if (nbDicesResponse == "") nbDices = 1;
             Console.WriteLine("Vous avez choisi {0} {1}", nbDices, nbDices > 1 ? "dés" : "dé");
             Console.ReadLine();
             Console.Clear();
+            
             //Choix du nombre de cartes dans une pile
             Console.Write("Nombre de cartes par pile : ");
             int nbCards = 0;
-            while (int.TryParse(Console.ReadLine(), out nbCards) && nbCards < 10)
+            string nbCardsResponse = Console.ReadLine();
+            while (int.TryParse(nbCardsResponse, out nbCards) && nbCards < 10)
             {
                 Console.WriteLine("Veuillez saisir un nombre valide (minimum 10)");
                 Console.ReadLine();
                 Console.Clear();
                 Console.Write("Nombre de cartes par pile : ");
+                nbCardsResponse = Console.ReadLine();
             }
+            if (nbCardsResponse == "") nbCards = 10;
             Console.WriteLine($"Vous avez choisi {nbCards} cartes pour les piles de départ");
             Console.ReadLine();
             Console.Clear();
+            
             //Choix du nombre de piéce de départ par joueur
             Console.Write("Nombre de piéces de départ : ");
             int nbPieces = 0;
-            while (int.TryParse(Console.ReadLine(), out nbPieces) && nbPieces < 3)
+            string nbPiecesResponse = Console.ReadLine();
+            while (int.TryParse(nbPiecesResponse, out nbPieces) && nbPieces < 3)
             {
                 Console.WriteLine("Veuillez saisir un nombre valide (minimum 3)");
                 Console.ReadLine();
                 Console.Clear();
                 Console.Write("Nombre de piéces de départ : ");
+                nbPiecesResponse = Console.ReadLine();
             }
+            if (nbPiecesResponse == "") nbPieces = 3;
             Console.WriteLine($"Vous avez choisi {nbPieces} piéces pour débuter la partie");
             Console.ReadLine();
             Console.Clear();
