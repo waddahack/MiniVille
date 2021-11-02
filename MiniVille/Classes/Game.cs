@@ -139,49 +139,41 @@ namespace MiniVille.Classes
                 }
             }
             y += Card.CardHeight/2;
-            Display("Rien - Rien acheter", x+i, ref y);
+            Display("Rien acheter", x+i, ref y);
             y += Card.CardHeight / 2 + 1;
-            bool bought, passed;
-            do
+
+            bool bought = false;
+            int choice = ArrowChoice(x, y);
+            y -= Card.CardHeight + 2;
+            ClearUnder(y);
+            Console.SetCursorPosition(x, y);
+            switch (choice)
             {
-                Console.SetCursorPosition(x, y);
-                string response = Console.ReadLine();
-                bought = false;
-                passed = false;
-                switch (response)
-                {
-                    case "1":
-                        bought = p.Buy(Piles[CardName.ChampDeBle]);
-                        break;
-                    case "2":
-                        bought = p.Buy(Piles[CardName.Boulangerie]);
-                        break;
-                    case "3":
-                        bought = p.Buy(Piles[CardName.Ferme]);
-                        break;
-                    case "4":
-                        bought = p.Buy(Piles[CardName.Cafe]);
-                        break;
-                    case "5":
-                        bought = p.Buy(Piles[CardName.Superette]);
-                        break;
-                    case "6":
-                        bought = p.Buy(Piles[CardName.Foret]);
-                        break;
-                    case "7":
-                        bought = p.Buy(Piles[CardName.Restaurant]);
-                        break;
-                    case "8":
-                        bought = p.Buy(Piles[CardName.Stade]);
-                        break;
-                    case "":
-                        passed = true;
-                        break;
-                    default:
-                        Display("Veuillez choisir un input valide", x, ref y);
-                        break;
-                }
-            } while (!bought && !passed);
+                case 0:
+                    bought = p.Buy(Piles[CardName.ChampDeBle]);
+                    break;
+                case 1:
+                    bought = p.Buy(Piles[CardName.Boulangerie]);
+                    break;
+                case 2:
+                    bought = p.Buy(Piles[CardName.Ferme]);
+                    break;
+                case 3:
+                    bought = p.Buy(Piles[CardName.Cafe]);
+                    break;
+                case 4:
+                    bought = p.Buy(Piles[CardName.Superette]);
+                    break;
+                case 5:
+                    bought = p.Buy(Piles[CardName.Foret]);
+                    break;
+                case 6:
+                    bought = p.Buy(Piles[CardName.Restaurant]);
+                    break;
+                case 7:
+                    bought = p.Buy(Piles[CardName.Stade]);
+                    break;
+            }
             if (bought)
             {
                 DisplayPlayersInfo();
@@ -191,19 +183,41 @@ namespace MiniVille.Classes
             ++CurrentPlayerId;
             if (CurrentPlayerId > Players.Count - 1)
                 CurrentPlayerId = 0;
-            if (!p.IsAlive) Players.Remove(p);
+            if (!p.IsAlive)
+                Players.Remove(p);
             //on tue tous les autre joueur car p est le gagnant
             /*if (p.NbPiece >= 20)
-            {
                 foreach (Player player in Players)
-                {
-                    Players.Remove(player);
-                }
-                Players.Add(p);
-            }*/
+                    if(player != p)
+                        Players.Remove(player);*/
 
             Display("Entrée - Fin du tour", x, ref y);
             Console.ReadLine();
+        }
+
+        private int ArrowChoice(int x, int y)
+        {
+            string arrow = "<"+String.Concat(Enumerable.Repeat("-", Card.CardWidth-2))+">";
+            string space;
+            int nbChoices = 0;
+            foreach (Pile p in Piles.Values)
+                if (p.Cards.Count > 0)
+                    nbChoices++;
+            int choice = 0;
+            ConsoleKey key;
+            do
+            {
+                space = String.Concat(Enumerable.Repeat(" ", choice*(Card.CardWidth+1)));
+                ClearUnder(y, 1);
+                Display(space+arrow, x, ref y, false);
+                key = Console.ReadKey().Key;
+                if (key == ConsoleKey.LeftArrow && choice > 0)
+                    choice--;
+                else if (key == ConsoleKey.RightArrow && choice < nbChoices)
+                    choice++;
+            }
+            while (key != ConsoleKey.Enter);
+            return choice;
         }
 
         private void DisplayPlayersInfo()
@@ -254,6 +268,7 @@ namespace MiniVille.Classes
         private void Display(string text, int x, ref int y, bool upY = true)
         {
             Console.SetCursorPosition(x, y);
+            //Console.SetWindowPosition(x, 0);
             Console.Write(text);
             if(upY)
                 y++;
@@ -266,7 +281,7 @@ namespace MiniVille.Classes
                 size = Console.WindowHeight - 1;
             Console.SetCursorPosition(0, top);
             Console.Write(String.Concat(Enumerable.Repeat(" ", Console.BufferWidth * size)));
-            Console.SetCursorPosition(x, y);
+            //Console.SetCursorPosition(x, y);
             Console.SetWindowPosition(windX, windY);
         }
     }

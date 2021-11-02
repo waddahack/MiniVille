@@ -29,14 +29,12 @@ namespace MiniVille.Classes
             Card card = pile.Draw();
             if (card.Price <= NbPiece)
             {
-                Console.WriteLine($"{Name} à acheté {card.Name}");
                 NbPiece -= card.Price;
                 AddToHand(card);
                 return true;
             }
             else
             {
-                Console.WriteLine("Vous ne pouvez pas acheter cela !");
                 pile.PutBack(card);
                 return false;
             }
