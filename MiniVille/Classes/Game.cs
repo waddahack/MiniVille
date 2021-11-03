@@ -171,7 +171,11 @@ namespace MiniVille.Classes
             DisplayPlayersInfo();
             // Check la mort du player
             if (!p.IsAlive)
+            {
                 Players.Remove(p);
+                DisplayPlayersInfo();
+                DisplayPlayersCards();
+            }
             // Buy phase
             CenterView(x);
             Console.ReadLine();
@@ -210,11 +214,12 @@ namespace MiniVille.Classes
             if (!p.IsAlive)
                 Players.Remove(p);
             //on tue tous les autre joueur car p est le gagnant
-            if (p.NbPiece >= 20)
-            {
-                Players = new List<Player>();
-                Players.Add(p);
-            }
+            foreach (Player player in Players)
+                if (player.NbPiece >= 20)
+                {
+                    Players = new List<Player>();
+                    Players.Add(player);
+                }
 
             Display("Fin du tour", x, ref y);
             Console.ReadLine();
@@ -258,7 +263,7 @@ namespace MiniVille.Classes
                 Player p = Players[i];
                 if(i > 0)
                 {
-                    x += Players[i - 1].GetUniqueCards().Count * (Card.CardWidth + margin) - margin; 
+                    x += Players[i - 1].GetUniqueCards().Count * (Card.CardWidth + margin) - margin;
                     for (int j = 0; j < Card.CardHeight + 3; j++)
                     {
                         Console.SetCursorPosition(x, j);
@@ -273,7 +278,7 @@ namespace MiniVille.Classes
                 Console.Write("{0}$", p.NbPiece);
                 Console.ForegroundColor = ConsoleColor.White;
             }
-            Console.SetCursorPosition(0, 0);
+            //Console.SetCursorPosition(0, 0);
         }
 
         private void DisplayPlayersCards()
@@ -314,12 +319,11 @@ namespace MiniVille.Classes
 
         private void CenterView(int baseX)
         {
-            int limit = Console.WindowWidth / 2;
-            if (baseX >= limit)
-                Console.SetWindowPosition(baseX-limit, 0);
+            int limit = baseX+(Piles.Count+1)*(Card.CardWidth+1);
+            if (limit >= Console.WindowWidth)
+                Console.SetWindowPosition(limit-Console.WindowWidth, 0);
             else
                 Console.SetWindowPosition(0, 0);
-
         }
     }
 }
