@@ -18,7 +18,8 @@ namespace MiniVille.Classes.Cards
 
         public override void ApplyEffect()
         {
-            this.Owner.GainCoins(1);
+            if(Game.Players[Game.CurrentPlayerId].NbPiece >= 1)
+                this.Owner.GainCoins(1);
             Game.Players[Game.CurrentPlayerId].LoseCoins(1);
         }
     }
