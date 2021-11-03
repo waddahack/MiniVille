@@ -7,7 +7,7 @@ namespace MiniVille
     {
         static void Main(string[] args)
         {
-            //Console.CursorVisible = false;
+            Console.CursorVisible = false;
             Console.SetWindowSize(Console.LargestWindowWidth-30, Console.LargestWindowHeight-20);
             Console.SetBufferSize(2000, 500);
 

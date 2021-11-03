@@ -35,7 +35,7 @@ namespace MiniVille.Classes
                 if (i == 0)
                     Console.Write("|{0}{2}{1}|", Value > 3 ? "0" : " ", Value > 1 ? "0" : " ", String.Concat(Enumerable.Repeat(" ", DiceWidth - 4)));
                 else if (i == 1)
-                    Console.Write("|{1}{0}{1}|", Value % 2 != 0 ? "0" : " ", String.Concat(Enumerable.Repeat(" ", (int)MathF.Floor((DiceWidth - 3) / 2))));
+                    Console.Write("|{1}{0}{1}|", Value % 2 != 0 ? "0" : Value == 6 ? "   " : " ", Value == 6 ? "0" : String.Concat(Enumerable.Repeat(" ", (int)MathF.Floor((DiceWidth - 3) / 2))));
                 else
                     Console.Write("|{0}{2}{1}|", Value > 1 ? "0" : " ", Value > 3 ? "0" : " ", String.Concat(Enumerable.Repeat(" ", DiceWidth - 4)));
             }

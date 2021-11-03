@@ -74,7 +74,7 @@ namespace MiniVille.Classes
 
         private void PlayerRound(){
             int x = 0, y = Card.CardHeight+4, margin = 1;
-            int moneyEarned;
+            int moneyEarned, playerMoneyEarner;
             for(int j = 0; j < CurrentPlayerId; j++)
                 x += Players[j].GetUniqueCards().Count * (Card.CardWidth + margin) - margin + 3; // 3 = betweenPlayers.Length
             List<int> diceValues = new List<int>();
@@ -94,20 +94,12 @@ namespace MiniVille.Classes
             }
             y += Dice.DiceHeight+1;
             // Action du joueur
-            moneyEarned = p.NbPiece;
+            playerMoneyEarner = p.NbPiece;
             foreach (Card c in p.Hand)
                 foreach (int diceValue in diceValues)
                     if ((c.Color == Card.CardColor.Vert || c.Color == Card.CardColor.Bleu) && c._activationNumbers.Contains<int>(diceValue))
                         c.ApplyEffect();
-            moneyEarned = p.NbPiece - moneyEarned;
-            if (moneyEarned > 0)
-            {
-                Display($"{p.Name}", x, ref y, false);
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Display($"+{moneyEarned}$", x + p.Name.Length + 1, ref y);
-                Console.ForegroundColor = ConsoleColor.White;
-            }
-            // Action des adversaires
+            // Action des adversaires et affichage gain
             foreach (Player opponent in Players)
                 if(opponent != p)
                 {
@@ -125,6 +117,16 @@ namespace MiniVille.Classes
                         Console.ForegroundColor = ConsoleColor.White;
                     }
                 }
+            // affichage gain joueur
+            playerMoneyEarner = p.NbPiece - playerMoneyEarner;
+            if (playerMoneyEarner != 0)
+            {
+                string displayMoneyEarned = (playerMoneyEarner > 0 ? "+" : "-") + MathF.Abs(playerMoneyEarner);
+                Display($"{p.Name}", x, ref y, false);
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Display($"{displayMoneyEarned}$", x + p.Name.Length + 1, ref y);
+                Console.ForegroundColor = ConsoleColor.White;
+            }
             // Reaffichage des sous-sous
             DisplayPlayersInfo();
             // Check la mort du player
