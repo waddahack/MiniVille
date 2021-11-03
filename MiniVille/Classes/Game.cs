@@ -55,6 +55,13 @@ namespace MiniVille.Classes
                 p.AddToHand(pileChampDeBle.Draw());
                 p.AddToHand(pileBoulangerie.Draw());
                 Players.Add(p);
+                
+                if (nbPlayer = 1){
+                    Player IA = new IA();
+                    IA.AddToHand(pileChampDeBle.Draw());
+                    IA.AddToHand(pileBoulangerie.Draw());
+                    Players.Add(IA);
+                } 
             }
             
             Start();
@@ -67,9 +74,42 @@ namespace MiniVille.Classes
             while (Players.Count > 1)
             {
                 ClearUnder(0, Card.CardHeight+4);
+                if (Player != IA){
                 PlayerRound();
+                }
+                if (Player = IA){
+                    IARound();
+                }
             }
             Console.WriteLine($"{Players[0].Name} a gagné la partie");
+        }
+
+        private void IARound(){
+            int x = 0, y = Card.CardHeight+4, margin = 1;
+            int moneyEarned, playerMoneyEarner;
+            for(int j = 0; j < CurrentPlayerId; j++)
+                x += Players[j].GetUniqueCards().Count * (Card.CardWidth + margin) - margin + 3; // 3 = betweenPlayers.Length
+            List<int> diceValues = new List<int>();
+            Player IA = Players[CurrentPlayerId];
+            Centerview(x);
+            Display($"*** IA ***", x, ref y);)
+            Console.ReadLine();
+            ClearUnder(x, y, 1);
+            y++;
+            for(int j = 0; j < dices.Count; j++)
+            {
+                Dice d = dices[j];
+                d.Throw();
+                diceValues.Add(d.Value);
+                d.Render(x+j*Dice.DiceWidth+1, y);
+            }
+            y += Dice.DiceHeight+1;
+
+            System.Threading.Thread.Sleep(1000);
+
+            //faire les transactions//
+
+            IA.BuyOrEconomy();
         }
 
         private void PlayerRound(){

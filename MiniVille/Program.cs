@@ -15,23 +15,27 @@ namespace MiniVille
             Console.WriteLine("Adaptation du jeu de société du même nom par Marin Ruelen, Léo Slomczynski et Tom Caudrillier \n");
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("/!\\ Ne pas resize la fenetre de la console /!\\");
-            Console.WriteLine("/!\\ Petite police recommandé (environ 16, clique droit -> propriété -> poilce) /!\\");
+            Console.WriteLine("/!\\ Petite police recommandé (environ 16, clique droit -> propriété -> police) /!\\");
             Console.ForegroundColor = ConsoleColor.White;
             Console.ReadLine();
             Console.Clear();
             
             //Choix du nombre de joueur
-            Console.Write("Nombre de joueurs : ");
+            Console.Write("Nombre de joueurs : (sélectionnez 1 joueur pour vous battre contre une IA)");
             int nbJoueurs;
             string nbJoueursResponse = Console.ReadLine();
-            while (int.TryParse(nbJoueursResponse, out nbJoueurs) && nbJoueurs < 2)
+            while (int.TryParse(nbJoueursResponse, out nbJoueurs) && nbJoueurs < 1)
             {
                 Console.WriteLine("Veuillez saisir un nombre valide (minimum 2)");
                 Console.ReadLine();
                 Console.Clear();
-                Console.Write("Nombre de joueurs : ");
+                Console.Write("Nombre de joueurs : (sélectionnez 1 joueur pour vous battre contre une IA)");
                 nbJoueursResponse = Console.ReadLine();
             }
+            if (nbJoueursResponse = 1){
+                
+            }
+
             if (nbJoueursResponse == "") nbJoueurs = 2;
             Console.WriteLine($"Vous avez choisi {nbJoueurs} de joueurs");
             Console.ReadLine();
