@@ -9,21 +9,33 @@ namespace MiniVille.Classes
     public class IA : Player
     {
         private static Random random;
+
+        public IA(int nbPiece, List<Card> cards)
+        {
+            this.Name = "IA";
+            this.IsAnIa = true;
+            this.NbPiece = NbPiece;
+            this.Hand = cards;
+        }
     
-    public void BuyOrEconomy(){
-        random = new Random()
-        int indexChoixCarte;
-        List<Pile> ChoixIA = new List<Pile>();
-        foreach (Pile pile in Piles.Values) {
-                if (pile.Cards.Count > 0 && IA.NbPiece >= Pile.Card[0].Price)
+        public void BuyOrEconomy(Dictionary<CardName, Pile> piles)
+        {
+            random = new Random();
+            int indexChoixCarte;
+            List<Pile> ChoixIA = new List<Pile>();
+            foreach (Pile pile in piles.Values)
+            {
+                if (pile.Cards.Count > 0 && NbPiece >= pile.Cards[0].Price)
                 {
                     ChoixIA.Add(pile);
                 }
             }
-            indexChoixCarte = random.next(0,ChoixIA.Count*2)
-            if (indexChoixCarte == 0 || indexChoixCarte > ChoixIA.Count){ /*fait des économies*/ }
-            else {
-                IA.Buy(ChoixIA[indexChoixCarte-1]);
+            indexChoixCarte = random.Next(0,ChoixIA.Count*2);
+            if (indexChoixCarte != 0 && indexChoixCarte > ChoixIA.Count)
+            {
+                Buy(ChoixIA[indexChoixCarte-1]);
             }
-        }   
+            //help les coupins
+        }
     }
+}

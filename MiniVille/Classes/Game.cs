@@ -13,6 +13,7 @@ namespace MiniVille.Classes
         public static List<Player> Players { get; private set; }
         private static List<Dice> dices;
         public static int CurrentPlayerId{get; private set;}
+        private static IA IAJoueur;
 
         public Game(int nbPlayer, int nbDice, int nbCardInPiles, int nbStartCoin){
             dices = new List<Dice>();
@@ -56,11 +57,10 @@ namespace MiniVille.Classes
                 p.AddToHand(pileBoulangerie.Draw());
                 Players.Add(p);
                 
-                if (nbPlayer = 1){
-                    Player IA = new IA();
-                    IA.AddToHand(pileChampDeBle.Draw());
-                    IA.AddToHand(pileBoulangerie.Draw());
-                    Players.Add(IA);
+                if (nbPlayer == 1){
+                    IAJoueur = new IA(nbStartCoin, new List<Card>());
+                    IAJoueur.AddToHand(pileChampDeBle.Draw());
+                    IAJoueur.AddToHand(pileBoulangerie.Draw());
                 } 
             }
             
@@ -71,31 +71,36 @@ namespace MiniVille.Classes
             CurrentPlayerId = 0;
             DisplayPlayersInfo();
             DisplayPlayersCards();
+            int loop = 0;
             while (Players.Count > 1)
             {
                 ClearUnder(0, Card.CardHeight+4);
-                if (Player != IA){
-                PlayerRound();
+                if (!Players[loop].IsAnIa)
+                {
+                    PlayerRound();
                 }
-                if (Player = IA){
+                else
+                {
                     IARound();
                 }
+                loop = (loop + 1) % Players.Count;
             }
             Console.WriteLine($"{Players[0].Name} a gagné la partie");
         }
 
         private void IARound(){
+            //ça fonctionne pas idk why
             int x = 0, y = Card.CardHeight+4, margin = 1;
             int moneyEarned, playerMoneyEarner;
             for(int j = 0; j < CurrentPlayerId; j++)
                 x += Players[j].GetUniqueCards().Count * (Card.CardWidth + margin) - margin + 3; // 3 = betweenPlayers.Length
             List<int> diceValues = new List<int>();
-            Player IA = Players[CurrentPlayerId];
-            Centerview(x);
-            Display($"*** IA ***", x, ref y);)
+            
+            Display($"*** IAJoueur ***", x, ref y);
             Console.ReadLine();
             ClearUnder(x, y, 1);
             y++;
+
             for(int j = 0; j < dices.Count; j++)
             {
                 Dice d = dices[j];
@@ -107,9 +112,51 @@ namespace MiniVille.Classes
 
             System.Threading.Thread.Sleep(1000);
 
-            //faire les transactions//
+            // Action du joueur
+            playerMoneyEarner = IAJoueur.NbPiece;
+            foreach (Card c in IAJoueur.Hand)
+                foreach (int diceValue in diceValues)
+                    if ((c.Color == Card.CardColor.Vert || c.Color == Card.CardColor.Bleu) && c._activationNumbers.Contains<int>(diceValue))
+                        c.ApplyEffect();
+            // Action des adversaires et affichage gain
+            foreach (Player opponent in Players)
+                if(opponent != IAJoueur)
+                {
+                    moneyEarned = opponent.NbPiece;
+                    foreach (Card c in opponent.Hand)
+                        foreach (int diceValue in diceValues)
+                            if ((c.Color == Card.CardColor.Rouge || c.Color == Card.CardColor.Bleu) && c._activationNumbers.Contains<int>(diceValue))
+                                c.ApplyEffect();
+                    moneyEarned = opponent.NbPiece - moneyEarned;
+                    if (moneyEarned > 0)
+                    {
+                        Display($"{opponent.Name}", x, ref y, false);
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Display($"+{moneyEarned}$", x+opponent.Name.Length+1, ref y);
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                }
+            // affichage gain joueur
+            playerMoneyEarner = IAJoueur.NbPiece - playerMoneyEarner;
+            if (playerMoneyEarner != 0)
+            {
+                string displayMoneyEarned = (playerMoneyEarner > 0 ? "+" : "-") + MathF.Abs(playerMoneyEarner);
+                Display($"{IAJoueur.Name}", x, ref y, false);
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Display($"{displayMoneyEarned}$", x + IAJoueur.Name.Length + 1, ref y);
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            // Reaffichage des sous-sous
+            DisplayPlayersInfo();
+            // Check la mort du player
+            if (!IAJoueur.IsAlive)
+            {
+                Players.Remove(IAJoueur);
+                DisplayPlayersInfo();
+                DisplayPlayersCards();
+            }
 
-            IA.BuyOrEconomy();
+            IAJoueur.BuyOrEconomy(Piles);
         }
 
         private void PlayerRound(){

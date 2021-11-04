@@ -32,8 +32,9 @@ namespace MiniVille
                 Console.Write("Nombre de joueurs : (sélectionnez 1 joueur pour vous battre contre une IA)");
                 nbJoueursResponse = Console.ReadLine();
             }
-            if (nbJoueursResponse = 1){
-                
+            if (nbJoueursResponse == "1")
+            {
+                //Ajout IA    
             }
 
             if (nbJoueursResponse == "") nbJoueurs = 2;

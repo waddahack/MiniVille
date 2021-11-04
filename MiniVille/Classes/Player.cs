@@ -11,6 +11,11 @@ namespace MiniVille.Classes
         public int NbPiece { get; set; }
         public List<Card> Hand { get; set; }
 
+        public bool IsAnIa {get; protected set;} = false;
+
+        public Player()
+        {}
+
         public Player(string name, int nbPiece, List<Card> hand)
         {
             Name = name;
