@@ -12,10 +12,10 @@ namespace MiniVille.Classes
 
         public IA(int nbPiece, List<Card> cards)
         {
-            this.Name = "IA";
-            this.IsAnIa = true;
-            this.NbPiece = NbPiece;
-            this.Hand = cards;
+            Name = "IA";
+            IsAnIa = true;
+            NbPiece = nbPiece;
+            Hand = cards;
         }
     
         public void BuyOrEconomy(Dictionary<CardName, Pile> piles)
@@ -33,7 +33,7 @@ namespace MiniVille.Classes
             indexChoixCarte = random.Next(0,ChoixIA.Count*2);
             if (indexChoixCarte != 0 && indexChoixCarte > ChoixIA.Count)
             {
-                Buy(ChoixIA[indexChoixCarte-1]);
+                Buy(ChoixIA[indexChoixCarte]);
             }
             //help les coupins
         }

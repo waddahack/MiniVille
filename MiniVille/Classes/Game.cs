@@ -61,6 +61,7 @@ namespace MiniVille.Classes
                     IAJoueur = new IA(nbStartCoin, new List<Card>());
                     IAJoueur.AddToHand(pileChampDeBle.Draw());
                     IAJoueur.AddToHand(pileBoulangerie.Draw());
+                    Players.Add(IAJoueur);
                 } 
             }
             
