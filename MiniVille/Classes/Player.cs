@@ -11,7 +11,7 @@ namespace MiniVille.Classes
         public int NbPiece { get; set; }
         public List<Card> Hand { get; set; }
 
-        public bool IsAnIa {get; protected set;} = false;
+        public bool IsAnIa {get; protected set;}
 
         public Player()
         {}
@@ -22,6 +22,7 @@ namespace MiniVille.Classes
             IsAlive = true;
             this.NbPiece = nbPiece;
             this.Hand = hand;
+            IsAnIa = false;
         }
         
         public void AddToHand(Card card)

@@ -7,7 +7,7 @@ namespace MiniVille
     {
         static void Main(string[] args)
         {
-            //Console.CursorVisible = false;
+            Console.CursorVisible = false;
             Console.SetWindowSize(Console.LargestWindowWidth-30, Console.LargestWindowHeight-20);
             Console.SetBufferSize(2000, 500);
 
@@ -80,15 +80,15 @@ namespace MiniVille
             Console.Write("Nombre de piéces de départ : ");
             int nbPieces = 0;
             string nbPiecesResponse = Console.ReadLine();
-            while (int.TryParse(nbPiecesResponse, out nbPieces) && nbPieces < 3)
+            while (int.TryParse(nbPiecesResponse, out nbPieces) && nbPieces < 2)
             {
-                Console.WriteLine("Veuillez saisir un nombre valide (minimum 3)");
+                Console.WriteLine("Veuillez saisir un nombre valide (minimum 2)");
                 Console.ReadLine();
                 Console.Clear();
                 Console.Write("Nombre de piéces de départ : ");
                 nbPiecesResponse = Console.ReadLine();
             }
-            if (nbPiecesResponse == "") nbPieces = 3;
+            if (nbPiecesResponse == "") nbPieces = 2;
             Console.WriteLine($"Vous avez choisi {nbPieces} piéces pour débuter la partie");
             Console.ReadLine();
             Console.Clear();

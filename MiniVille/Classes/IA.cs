@@ -10,12 +10,9 @@ namespace MiniVille.Classes
     {
         private static Random random;
 
-        public IA(int nbPiece, List<Card> cards)
+        public IA(int nbPiece, List<Card> cards) : base("IA", nbPiece, cards)
         {
-            Name = "IA";
             IsAnIa = true;
-            NbPiece = nbPiece;
-            Hand = cards;
         }
     
         public void BuyOrEconomy(Dictionary<CardName, Pile> piles)

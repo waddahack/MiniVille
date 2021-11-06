@@ -77,13 +77,9 @@ namespace MiniVille.Classes
             {
                 ClearUnder(0, Card.CardHeight+4);
                 if (!Players[loop].IsAnIa)
-                {
                     PlayerRound();
-                }
                 else
-                {
                     IARound();
-                }
                 loop = (loop + 1) % Players.Count;
             }
             Console.WriteLine($"{Players[0].Name} a gagné la partie");
@@ -97,7 +93,7 @@ namespace MiniVille.Classes
                 x += Players[j].GetUniqueCards().Count * (Card.CardWidth + margin) - margin + 3; // 3 = betweenPlayers.Length
             List<int> diceValues = new List<int>();
             
-            Display($"*** IAJoueur ***", x, ref y);
+            Display("*** IA ***", x, ref y);
             Console.ReadLine();
             ClearUnder(x, y, 1);
             y++;
@@ -151,13 +147,10 @@ namespace MiniVille.Classes
             DisplayPlayersInfo();
             // Check la mort du player
             if (!IAJoueur.IsAlive)
-            {
                 Players.Remove(IAJoueur);
-                DisplayPlayersInfo();
-                DisplayPlayersCards();
-            }
 
             IAJoueur.BuyOrEconomy(Piles);
+            ++CurrentPlayerId;
         }
 
         private void PlayerRound(){
@@ -217,13 +210,6 @@ namespace MiniVille.Classes
             }
             // Reaffichage des sous-sous
             DisplayPlayersInfo();
-            // Check la mort du player
-            if (!p.IsAlive)
-            {
-                Players.Remove(p);
-                DisplayPlayersInfo();
-                DisplayPlayersCards();
-            }
             // Buy phase
             CenterView(x);
             Console.ReadLine();
