@@ -31,7 +31,7 @@ namespace MiniVille.Classes
                 }
             }
             indexChoixCarte = random.Next(0,ChoixIA.Count*2);
-            if (indexChoixCarte != 0 && indexChoixCarte > ChoixIA.Count)
+            if (indexChoixCarte != 0 && indexChoixCarte < ChoixIA.Count)
             {
                 Buy(ChoixIA[indexChoixCarte]);
             }
