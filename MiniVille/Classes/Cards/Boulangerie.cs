@@ -11,14 +11,14 @@ namespace MiniVille.Classes.Cards
             Name = "Boulangerie";
             CardName = CardName.Boulangerie;
             Color = CardColor.Vert;
-            _activationNumbers = new int[] { 2 };
+            _activationNumbers = new int[] { 2, 3 };
             Price = 1;
-            Effet = "Recevez 2 pièces";
+            Effet = "Recevez 1 pièce";
         }
 
         public override void ApplyEffect()
         {
-            this.Owner.GainCoins(2);
+            this.Owner.GainCoins(1);
         }
     }
 }

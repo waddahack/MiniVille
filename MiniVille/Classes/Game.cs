@@ -41,8 +41,8 @@ namespace MiniVille.Classes
                 pileStade.PutBack(new Stade());
             }
             Piles.Add(CardName.ChampDeBle, pileChampDeBle);
-            Piles.Add(CardName.Boulangerie, pileBoulangerie);
             Piles.Add(CardName.Ferme, pileFerme);
+            Piles.Add(CardName.Boulangerie, pileBoulangerie);
             Piles.Add(CardName.Cafe, pileCafe);
             Piles.Add(CardName.Superette, pileSuperette);
             Piles.Add(CardName.Foret, pileForet);
@@ -106,7 +106,7 @@ namespace MiniVille.Classes
             }
             y += Dice.DiceHeight+1;
 
-            System.Threading.Thread.Sleep(1000);
+            System.Threading.Thread.Sleep(500);
 
             // Action du joueur
             playerMoneyEarner = IAJoueur.NbPiece;
@@ -144,6 +144,15 @@ namespace MiniVille.Classes
             }
             // Reaffichage des sous-sous
             DisplayPlayersInfo();
+
+            System.Threading.Thread.Sleep(500);
+            Display(".", x, ref y, false);
+            System.Threading.Thread.Sleep(500);
+            Display(".", x+2, ref y, false);
+            System.Threading.Thread.Sleep(500);
+            Display(".", x+4, ref y, false);
+            System.Threading.Thread.Sleep(500);
+
             // Check la mort du player
             if (!IAJoueur.IsAlive)
                 Players.Remove(IAJoueur);
@@ -155,6 +164,7 @@ namespace MiniVille.Classes
             
             DisplayPlayersInfo();
             DisplayPlayersCards();
+            System.Threading.Thread.Sleep(1000);
         }
 
         private void PlayerRound(){

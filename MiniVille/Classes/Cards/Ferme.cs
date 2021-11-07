@@ -10,8 +10,8 @@ namespace MiniVille.Classes.Cards
             Name = "Ferme";
             CardName = CardName.Ferme;
             Color = CardColor.Bleu;
-            _activationNumbers = new int[] { 1 };
-            Price = 2;
+            _activationNumbers = new int[] { 2 };
+            Price = 1;
             Effet = "Recevez 1 pièce";
         }
 
