@@ -150,10 +150,12 @@ namespace MiniVille.Classes
 
             IAJoueur.BuyOrEconomy(Piles);
             ++CurrentPlayerId;
+            if (CurrentPlayerId > Players.Count - 1)
+                CurrentPlayerId = 0;
             
-                DisplayPlayersInfo();
-                DisplayPlayersCards();
-            }
+            DisplayPlayersInfo();
+            DisplayPlayersCards();
+        }
 
         private void PlayerRound(){
             int x = 0, y = Card.CardHeight+4, margin = 1;

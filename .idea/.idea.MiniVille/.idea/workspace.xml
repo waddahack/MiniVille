@@ -101,4 +101,23 @@
     <MESSAGE value="minidebug" />
     <option name="LAST_COMMIT_MESSAGE" value="minidebug" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/MiniVille/Classes/Game.cs</url>
+          <line>159</line>
+          <properties documentPath="D:\Documents\Cours\Enjmin\Licence Info\USRS46 Programmation objet\MiniVille\MiniVille\Classes\Game.cs" initialLine="157" containingFunctionPresentation="method 'PlayerRound'">
+            <startOffsets>
+              <option value="6507" />
+            </startOffsets>
+            <endOffsets>
+              <option value="6508" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
 </project>
