@@ -86,7 +86,6 @@ namespace MiniVille.Classes
         }
 
         private void IARound(){
-            //ça fonctionne pas idk why
             int x = 0, y = Card.CardHeight+4, margin = 1;
             int moneyEarned, playerMoneyEarner;
             for(int j = 0; j < CurrentPlayerId; j++)
@@ -151,7 +150,10 @@ namespace MiniVille.Classes
 
             IAJoueur.BuyOrEconomy(Piles);
             ++CurrentPlayerId;
-        }
+            
+                DisplayPlayersInfo();
+                DisplayPlayersCards();
+            }
 
         private void PlayerRound(){
             int x = 0, y = Card.CardHeight+4, margin = 1;

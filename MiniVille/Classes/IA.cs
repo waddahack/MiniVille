@@ -32,7 +32,6 @@ namespace MiniVille.Classes
             {
                 Buy(ChoixIA[indexChoixCarte]);
             }
-            //help les coupins
         }
     }
 }

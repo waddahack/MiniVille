@@ -5,15 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1b592de9-104c-4118-a014-12a3e0f07f12" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.MiniVille/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MiniVille/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MiniVille/Classes/Game.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MiniVille/Classes/Game.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MiniVille/Classes/IA.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MiniVille/Classes/IA.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MiniVille/bin/Debug/netcoreapp3.1/MiniVille.dll" beforeDir="false" afterPath="$PROJECT_DIR$/MiniVille/bin/Debug/netcoreapp3.1/MiniVille.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MiniVille/bin/Debug/netcoreapp3.1/MiniVille.exe" beforeDir="false" afterPath="$PROJECT_DIR$/MiniVille/bin/Debug/netcoreapp3.1/MiniVille.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MiniVille/bin/Debug/netcoreapp3.1/MiniVille.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/MiniVille/bin/Debug/netcoreapp3.1/MiniVille.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MiniVille/bin/Debug/netcoreapp3.1/MiniVille.runtimeconfig.dev.json" beforeDir="false" afterPath="$PROJECT_DIR$/MiniVille/bin/Debug/netcoreapp3.1/MiniVille.runtimeconfig.dev.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MiniVille/obj/Debug/netcoreapp3.1/MiniVille.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MiniVille/obj/Debug/netcoreapp3.1/MiniVille.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MiniVille/obj/Debug/netcoreapp3.1/MiniVille.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/MiniVille/obj/Debug/netcoreapp3.1/MiniVille.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MiniVille/obj/Debug/netcoreapp3.1/MiniVille.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/MiniVille/obj/Debug/netcoreapp3.1/MiniVille.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MiniVille/obj/Debug/netcoreapp3.1/MiniVille.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/MiniVille/obj/Debug/netcoreapp3.1/MiniVille.csproj.FileListAbsolute.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MiniVille/obj/Debug/netcoreapp3.1/MiniVille.dll" beforeDir="false" afterPath="$PROJECT_DIR$/MiniVille/obj/Debug/netcoreapp3.1/MiniVille.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MiniVille/obj/Debug/netcoreapp3.1/MiniVille.genruntimeconfig.cache" beforeDir="false" afterPath="$PROJECT_DIR$/MiniVille/obj/Debug/netcoreapp3.1/MiniVille.genruntimeconfig.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MiniVille/obj/Debug/netcoreapp3.1/MiniVille.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/MiniVille/obj/Debug/netcoreapp3.1/MiniVille.pdb" afterDir="false" />
@@ -22,7 +21,6 @@
       <change beforePath="$PROJECT_DIR$/MiniVille/obj/MiniVille.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/MiniVille/obj/MiniVille.csproj.nuget.g.props" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MiniVille/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/MiniVille/obj/project.assets.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MiniVille/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/MiniVille/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MiniVille/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/MiniVille/obj/project.packagespec.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MiniVille/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/MiniVille/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -78,16 +76,29 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1636194957649</updated>
-      <workItem from="1636194960946" duration="325000" />
+      <workItem from="1636194960946" duration="479000" />
+      <workItem from="1636195602607" duration="421000" />
+      <workItem from="1636272309246" duration="350000" />
     </task>
+    <task id="LOCAL-00001" summary="minidebug">
+      <created>1636195348511</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1636195348511</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="minidebug" />
+    <option name="LAST_COMMIT_MESSAGE" value="minidebug" />
   </component>
 </project>
