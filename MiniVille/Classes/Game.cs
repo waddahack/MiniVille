@@ -29,6 +29,7 @@ namespace MiniVille.Classes
             Pile pileForet = new Pile();
             Pile pileRestaurant = new Pile();
             Pile pileStade = new Pile();
+            Pile pilePiscine = new Pile();
             for(int i = 0; i < nbCardInPiles; i++)
             {
                 pileChampDeBle.PutBack(new ChampDeBle());
@@ -39,6 +40,7 @@ namespace MiniVille.Classes
                 pileForet.PutBack(new Foret());
                 pileRestaurant.PutBack(new Restaurant());
                 pileStade.PutBack(new Stade());
+                pilePiscine.PutBack(new Piscine());
             }
             Piles.Add(CardName.ChampDeBle, pileChampDeBle);
             Piles.Add(CardName.Ferme, pileFerme);
@@ -48,6 +50,7 @@ namespace MiniVille.Classes
             Piles.Add(CardName.Foret, pileForet);
             Piles.Add(CardName.Restaurant, pileRestaurant);
             Piles.Add(CardName.Stade, pileStade);
+            Piles.Add(CardName.Piscine, pilePiscine);
 
             Players = new List<Player>();
             for (int i = 0; i < nbPlayer; i++)
@@ -83,6 +86,7 @@ namespace MiniVille.Classes
                 loop = (loop + 1) % Players.Count;
             }
             Console.WriteLine($"{Players[0].Name} a gagné la partie");
+            Console.ReadLine();
         }
 
         private void IARound(){
@@ -385,5 +389,6 @@ public enum CardName {
     Foret,
     Restaurant,
     Stade,
+    Piscine,
     Void
 }

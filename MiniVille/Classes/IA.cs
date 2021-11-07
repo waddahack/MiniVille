@@ -27,7 +27,7 @@ namespace MiniVille.Classes
                     ChoixIA.Add(pile);
                 }
             }
-            indexChoixCarte = random.Next(0,ChoixIA.Count-1);
+            indexChoixCarte = random.Next(0,ChoixIA.Count);
             if (indexChoixCarte != 0 && indexChoixCarte < ChoixIA.Count)
             {
                 Buy(ChoixIA[indexChoixCarte]);
