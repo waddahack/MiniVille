@@ -1,0 +1,13 @@
+F:\Programmation\MiniVille\Source\MiniVille\bin\Release\netcoreapp3.1\MiniVille.exe
+F:\Programmation\MiniVille\Source\MiniVille\bin\Release\netcoreapp3.1\MiniVille.deps.json
+F:\Programmation\MiniVille\Source\MiniVille\bin\Release\netcoreapp3.1\MiniVille.runtimeconfig.json
+F:\Programmation\MiniVille\Source\MiniVille\bin\Release\netcoreapp3.1\MiniVille.runtimeconfig.dev.json
+F:\Programmation\MiniVille\Source\MiniVille\bin\Release\netcoreapp3.1\MiniVille.dll
+F:\Programmation\MiniVille\Source\MiniVille\bin\Release\netcoreapp3.1\MiniVille.pdb
+F:\Programmation\MiniVille\Source\MiniVille\obj\Release\netcoreapp3.1\MiniVille.csprojAssemblyReference.cache
+F:\Programmation\MiniVille\Source\MiniVille\obj\Release\netcoreapp3.1\MiniVille.AssemblyInfoInputs.cache
+F:\Programmation\MiniVille\Source\MiniVille\obj\Release\netcoreapp3.1\MiniVille.AssemblyInfo.cs
+F:\Programmation\MiniVille\Source\MiniVille\obj\Release\netcoreapp3.1\MiniVille.csproj.CoreCompileInputs.cache
+F:\Programmation\MiniVille\Source\MiniVille\obj\Release\netcoreapp3.1\MiniVille.dll
+F:\Programmation\MiniVille\Source\MiniVille\obj\Release\netcoreapp3.1\MiniVille.pdb
+F:\Programmation\MiniVille\Source\MiniVille\obj\Release\netcoreapp3.1\MiniVille.genruntimeconfig.cache

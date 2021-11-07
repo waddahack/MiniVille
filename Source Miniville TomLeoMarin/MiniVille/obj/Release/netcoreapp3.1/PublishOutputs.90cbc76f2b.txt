@@ -1,0 +1,5 @@
+F:\Programmation\MiniVille\Exe\MiniVille.exe
+F:\Programmation\MiniVille\Exe\MiniVille.dll
+F:\Programmation\MiniVille\Exe\MiniVille.deps.json
+F:\Programmation\MiniVille\Exe\MiniVille.runtimeconfig.json
+F:\Programmation\MiniVille\Exe\MiniVille.pdb
